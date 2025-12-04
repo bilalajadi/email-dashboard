@@ -180,6 +180,24 @@
       font-size: 0.875rem;
     }
 
+    /* Section Header */
+    .section-header {
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .section-description {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
     /* Grid Layout */
     .grid {
       display: grid;
@@ -200,7 +218,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .card-title {
@@ -217,9 +235,19 @@
       margin-bottom: 0.25rem;
     }
 
+    .card-description {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
     .card-subtitle {
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       color: var(--text-secondary);
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+      margin-top: 0.5rem;
     }
 
     /* Status Badge */
@@ -271,61 +299,22 @@
 
     .dns-item .label {
       font-size: 0.75rem;
-      color: var(--text-secondary);
+      font-weight: 600;
+      color: var(--text-primary);
       margin-bottom: 0.25rem;
     }
 
     .dns-item .value {
       font-size: 0.875rem;
       font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
     }
 
-    /* Progress Bar */
-    .progress-container {
-      margin-top: 1rem;
-    }
-
-    .progress-bar {
-      height: 8px;
-      background: var(--bg-dark);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--blue);
-      border-radius: 4px;
-      transition: width 0.3s ease;
-    }
-
-    .progress-labels {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 0.5rem;
-      font-size: 0.75rem;
+    .dns-item .description {
+      font-size: 0.65rem;
       color: var(--text-muted);
-    }
-
-    /* Issues List */
-    .issues-list {
-      list-style: none;
-    }
-
-    .issues-list li {
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .issues-list li:last-child {
-      border-bottom: none;
-    }
-
-    .issues-list .icon {
-      font-size: 1rem;
+      line-height: 1.3;
     }
 
     /* Metrics Row */
@@ -351,6 +340,33 @@
     .metric-item .label {
       font-size: 0.75rem;
       color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+
+    .metric-item .description {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    /* Issues List */
+    .issues-list {
+      list-style: none;
+    }
+
+    .issues-list li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .issues-list li:last-child {
+      border-bottom: none;
+    }
+
+    .issues-list .icon {
+      font-size: 1rem;
     }
 
     /* Loading */
@@ -372,6 +388,21 @@
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    /* Info tooltip */
+    .info-icon {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background: var(--text-muted);
+      color: var(--bg-dark);
+      border-radius: 50%;
+      font-size: 10px;
+      text-align: center;
+      line-height: 14px;
+      cursor: help;
+      margin-left: 4px;
     }
 
     /* Responsive */
@@ -435,6 +466,12 @@
           </div>
         </div>
 
+        <!-- Deliverability Metrics Section -->
+        <div class="section-header">
+          <div class="section-title">Deliverability Metrics</div>
+          <div class="section-description">These metrics determine if AWS will suspend your sending. Keep bounce and complaint rates low to maintain good sender reputation.</div>
+        </div>
+
         <!-- Main Grid -->
         <div class="grid">
           <!-- Bounce Rate -->
@@ -444,7 +481,8 @@
               <span class="status-badge" id="bounceStatus">--</span>
             </div>
             <div class="card-value" id="bounceRate">--%</div>
-            <div class="card-subtitle">Target: &lt;2% | Warning: 5% | Critical: 10%</div>
+            <div class="card-description">% of emails that couldn't be delivered (invalid addresses, full inboxes). High bounce = sending to bad addresses.</div>
+            <div class="card-subtitle">Target: &lt;2% | Warning: 5% | AWS Suspends: 10%</div>
           </div>
 
           <!-- Complaint Rate -->
@@ -454,7 +492,8 @@
               <span class="status-badge" id="complaintStatus">--</span>
             </div>
             <div class="card-value" id="complaintRate">--%</div>
-            <div class="card-subtitle">Target: &lt;0.05% | Warning: 0.08% | Critical: 0.1%</div>
+            <div class="card-description">% of recipients who clicked "Report as Spam". This is the worst signal - means people don't want your emails.</div>
+            <div class="card-subtitle">Target: &lt;0.05% | Warning: 0.08% | AWS Suspends: 0.1%</div>
           </div>
 
           <!-- Open Rate -->
@@ -464,7 +503,8 @@
               <span class="status-badge" id="openStatus">--</span>
             </div>
             <div class="card-value" id="openRate">--%</div>
-            <div class="card-subtitle">Based on unique opens (last 24h)</div>
+            <div class="card-description">% of recipients who opened your email. Measures engagement and subject line effectiveness.</div>
+            <div class="card-subtitle">Good: &gt;25% | Average: 15-25% | Low: &lt;15%</div>
           </div>
 
           <!-- Click Rate -->
@@ -474,63 +514,76 @@
               <span class="status-badge" id="clickStatus">--</span>
             </div>
             <div class="card-value" id="clickRate">--%</div>
-            <div class="card-subtitle">Based on unique clicks (last 24h)</div>
+            <div class="card-description">% of recipients who clicked a link in your email. Shows how compelling your content is.</div>
+            <div class="card-subtitle">Good: &gt;3% | Average: 1-3% | Low: &lt;1%</div>
           </div>
         </div>
 
-        <!-- DNS Authentication -->
-        <div class="card" style="margin-bottom: 1.5rem;">
-          <div class="card-header">
-            <span class="card-title">DNS Authentication</span>
-          </div>
+        <!-- DNS Authentication Section -->
+        <div class="section-header">
+          <div class="section-title">DNS Authentication</div>
+          <div class="section-description">These DNS records prove your emails are legitimate and not forged. If any fail, your emails may go to spam or be rejected.</div>
+        </div>
+
+        <div class="card" style="margin-bottom: 2rem;">
           <div class="dns-grid">
             <div class="dns-item">
               <div class="icon" id="spfIcon"></div>
               <div class="label">SPF</div>
               <div class="value" id="spfStatus">--</div>
+              <div class="description">Tells email providers which servers can send from niyyah.app (like a guest list)</div>
             </div>
             <div class="dns-item">
               <div class="icon" id="dkimIcon"></div>
               <div class="label">DKIM</div>
               <div class="value" id="dkimStatus">--</div>
+              <div class="description">Digital signature proving the email wasn't tampered with (like a wax seal)</div>
             </div>
             <div class="dns-item">
               <div class="icon" id="dmarcIcon"></div>
               <div class="label">DMARC</div>
               <div class="value" id="dmarcStatus">--</div>
+              <div class="description">Policy for what to do if SPF/DKIM fail (reject, quarantine, or allow)</div>
             </div>
           </div>
         </div>
 
-        <!-- Email Activity -->
-        <div class="card" style="margin-bottom: 1.5rem;">
-          <div class="card-header">
-            <span class="card-title">Email Activity (Last 24 Hours)</span>
-          </div>
+        <!-- Email Activity Section -->
+        <div class="section-header">
+          <div class="section-title">Email Activity (Last 24 Hours)</div>
+          <div class="section-description">Raw counts of email events tracked in the last 24 hours. Use this to monitor your sending volume.</div>
+        </div>
+
+        <div class="card" style="margin-bottom: 2rem;">
           <div class="metrics-row">
             <div class="metric-item">
               <div class="value" id="sentCount">0</div>
               <div class="label">Sent</div>
+              <div class="description">Total emails sent</div>
             </div>
             <div class="metric-item">
               <div class="value" id="deliveredCount">0</div>
               <div class="label">Delivered</div>
+              <div class="description">Successfully reached inbox</div>
             </div>
             <div class="metric-item">
               <div class="value" id="opensCount">0</div>
               <div class="label">Opens</div>
+              <div class="description">Unique people who opened</div>
             </div>
             <div class="metric-item">
               <div class="value" id="clicksCount">0</div>
               <div class="label">Clicks</div>
+              <div class="description">Unique people who clicked</div>
             </div>
           </div>
         </div>
 
-        <!-- Issues -->
+        <!-- Issues Section -->
         <div class="card" id="issuesCard" style="display: none;">
-          <div class="card-header">
-            <span class="card-title">Issues & Recommendations</span>
+          <div class="section-header" style="margin-bottom: 0.5rem;">
+            <div class="section-title">Issues & Recommendations</div>
+            <div class="section-description">Problems detected and suggested fixes. Address these before sending.</div>
           </div>
           <ul class="issues-list" id="issuesList"></ul>
         </div>
@@ -613,9 +666,9 @@
       verdictBanner.className = `verdict-banner ${data.verdict}`;
 
       const verdictConfig = {
-        safe: { icon: '🟢', title: 'SAFE TO SEND', subtitle: 'All metrics within healthy thresholds' },
-        warning: { icon: '🟡', title: 'PROCEED WITH CAUTION', subtitle: 'Some metrics need attention' },
-        critical: { icon: '🔴', title: 'DO NOT SEND', subtitle: 'Critical issues detected - stop sending!' },
+        safe: { icon: '🟢', title: 'SAFE TO SEND', subtitle: 'All metrics within healthy thresholds. You can proceed with sending.' },
+        warning: { icon: '🟡', title: 'PROCEED WITH CAUTION', subtitle: 'Some metrics need attention. Review issues below before sending large batches.' },
+        critical: { icon: '🔴', title: 'DO NOT SEND', subtitle: 'Critical issues detected. Stop all sending and address issues immediately to avoid AWS suspension.' },
       };
 
       const verdict = verdictConfig[data.verdict] || verdictConfig.warning;
@@ -628,12 +681,12 @@
       updateRate('complaint', data.events.complaintRate, data.thresholds.complaintRate);
 
       document.getElementById('openRate').textContent = `${data.events.openRate.toFixed(1)}%`;
-      document.getElementById('openStatus').textContent = data.events.openRate > 20 ? 'Good' : data.events.openRate > 10 ? 'Average' : 'Low';
-      document.getElementById('openStatus').className = `status-badge ${data.events.openRate > 20 ? 'healthy' : data.events.openRate > 10 ? 'warning' : 'fail'}`;
+      document.getElementById('openStatus').textContent = data.events.openRate > 25 ? 'Good' : data.events.openRate > 15 ? 'Average' : 'Low';
+      document.getElementById('openStatus').className = `status-badge ${data.events.openRate > 25 ? 'healthy' : data.events.openRate > 15 ? 'warning' : 'fail'}`;
 
       document.getElementById('clickRate').textContent = `${data.events.clickRate.toFixed(1)}%`;
-      document.getElementById('clickStatus').textContent = data.events.clickRate > 2 ? 'Good' : data.events.clickRate > 1 ? 'Average' : 'Low';
-      document.getElementById('clickStatus').className = `status-badge ${data.events.clickRate > 2 ? 'healthy' : data.events.clickRate > 1 ? 'warning' : 'fail'}`;
+      document.getElementById('clickStatus').textContent = data.events.clickRate > 3 ? 'Good' : data.events.clickRate > 1 ? 'Average' : 'Low';
+      document.getElementById('clickStatus').className = `status-badge ${data.events.clickRate > 3 ? 'healthy' : data.events.clickRate > 1 ? 'warning' : 'fail'}`;
 
       // Update DNS
       updateDNS('spf', data.dns.spf);
