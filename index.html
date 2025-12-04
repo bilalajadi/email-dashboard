@@ -108,6 +108,21 @@
 
     .refresh-btn:hover { background: var(--bg-card); }
 
+    .reset-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--red);
+      background: transparent;
+      color: var(--red);
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .reset-btn:hover { background: var(--red-bg); }
+
+    .header-buttons { display: flex; gap: 0.5rem; }
+
     .verdict-banner {
       padding: 1.5rem;
       border-radius: 1rem;
@@ -262,7 +277,10 @@
           <h1>Niyyah Email Health Dashboard</h1>
           <p class="last-updated" id="lastUpdated">Last updated: --</p>
         </div>
-        <button class="refresh-btn" onclick="fetchData()">Refresh</button>
+        <div class="header-buttons">
+          <button class="refresh-btn" onclick="fetchData()">Refresh</button>
+          <button class="reset-btn" onclick="resetStats()">Reset Stats</button>
+        </div>
       </div>
 
       <div class="loading" id="loading">
@@ -554,6 +572,33 @@
       } else {
         iconEl.textContent = '❌';
         statusEl.textContent = 'Fail';
+      }
+    }
+
+    async function resetStats() {
+      if (!confirm('Are you sure you want to reset all email stats? This will delete all events from the last 24 hours.')) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`https://vtdpsiekdsabjkphwlef.supabase.co/functions/v1/reset-stats?password=${encodeURIComponent(password)}`, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+            'apikey': SUPABASE_ANON_KEY
+          }
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert(`Stats reset successfully! Deleted ${data.deleted} events.`);
+          fetchData();
+        } else {
+          alert('Failed to reset stats: ' + (data.message || data.error));
+        }
+      } catch (error) {
+        alert('Error resetting stats: ' + error.message);
       }
     }
 
