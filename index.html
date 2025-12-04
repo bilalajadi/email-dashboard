@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niyyah Email Health Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-hover: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --green: #22c55e;
+      --green-bg: rgba(34, 197, 94, 0.1);
+      --yellow: #eab308;
+      --yellow-bg: rgba(234, 179, 8, 0.1);
+      --red: #ef4444;
+      --red-bg: rgba(239, 68, 68, 0.1);
+      --blue: #3b82f6;
+      --border: #334155;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Login Screen */
+    .login-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      gap: 1.5rem;
+    }
+
+    .login-screen h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .login-form {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .login-form input {
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 1rem;
+      width: 250px;
+    }
+
+    .login-form button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      background: var(--blue);
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .login-form button:hover {
+      opacity: 0.9;
+    }
+
+    .error-message {
+      color: var(--red);
+      font-size: 0.875rem;
+    }
+
+    /* Dashboard */
+    .dashboard {
+      display: none;
+    }
+
+    .dashboard.visible {
+      display: block;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .last-updated {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    .refresh-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .refresh-btn:hover {
+      background: var(--bg-card);
+    }
+
+    /* Verdict Banner */
+    .verdict-banner {
+      padding: 1.5rem;
+      border-radius: 1rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .verdict-banner.safe {
+      background: var(--green-bg);
+      border: 1px solid var(--green);
+    }
+
+    .verdict-banner.warning {
+      background: var(--yellow-bg);
+      border: 1px solid var(--yellow);
+    }
+
+    .verdict-banner.critical {
+      background: var(--red-bg);
+      border: 1px solid var(--red);
+    }
+
+    .verdict-icon {
+      font-size: 2rem;
+    }
+
+    .verdict-text h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .verdict-text p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* Status Badge */
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .status-badge.pass, .status-badge.healthy {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .status-badge.warning {
+      background: var(--yellow-bg);
+      color: var(--yellow);
+    }
+
+    .status-badge.fail, .status-badge.critical {
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    .status-badge.missing {
+      background: var(--yellow-bg);
+      color: var(--yellow);
+    }
+
+    /* DNS Section */
+    .dns-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .dns-item {
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-dark);
+      border-radius: 0.75rem;
+    }
+
+    .dns-item .icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .dns-item .label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+
+    .dns-item .value {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      margin-top: 1rem;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--bg-dark);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--blue);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Issues List */
+    .issues-list {
+      list-style: none;
+    }
+
+    .issues-list li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .issues-list li:last-child {
+      border-bottom: none;
+    }
+
+    .issues-list .icon {
+      font-size: 1rem;
+    }
+
+    /* Metrics Row */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .metric-item {
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-dark);
+      border-radius: 0.75rem;
+    }
+
+    .metric-item .value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .metric-item .label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .dns-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+      <h1>Niyyah Email Health Dashboard</h1>
+      <div class="login-form">
+        <input type="password" id="passwordInput" placeholder="Enter password" autofocus>
+        <button onclick="login()">Access</button>
+      </div>
+      <p class="error-message" id="errorMessage"></p>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+      <!-- Header -->
+      <div class="header">
+        <div>
+          <h1>Niyyah Email Health Dashboard</h1>
+          <p class="last-updated" id="lastUpdated">Last updated: --</p>
+        </div>
+        <button class="refresh-btn" onclick="fetchData()">Refresh</button>
+      </div>
+
+      <!-- Loading -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+      </div>
+
+      <!-- Content -->
+      <div id="content" style="display: none;">
+        <!-- Verdict Banner -->
+        <div class="verdict-banner" id="verdictBanner">
+          <span class="verdict-icon" id="verdictIcon"></span>
+          <div class="verdict-text">
+            <h2 id="verdictTitle"></h2>
+            <p id="verdictSubtitle"></p>
+          </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid">
+          <!-- Bounce Rate -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Bounce Rate</span>
+              <span class="status-badge" id="bounceStatus">--</span>
+            </div>
+            <div class="card-value" id="bounceRate">--%</div>
+            <div class="card-subtitle">Target: &lt;2% | Warning: 5% | Critical: 10%</div>
+          </div>
+
+          <!-- Complaint Rate -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Complaint Rate</span>
+              <span class="status-badge" id="complaintStatus">--</span>
+            </div>
+            <div class="card-value" id="complaintRate">--%</div>
+            <div class="card-subtitle">Target: &lt;0.05% | Warning: 0.08% | Critical: 0.1%</div>
+          </div>
+
+          <!-- Open Rate -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Open Rate</span>
+              <span class="status-badge" id="openStatus">--</span>
+            </div>
+            <div class="card-value" id="openRate">--%</div>
+            <div class="card-subtitle">Based on unique opens (last 24h)</div>
+          </div>
+
+          <!-- Click Rate -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Click Rate</span>
+              <span class="status-badge" id="clickStatus">--</span>
+            </div>
+            <div class="card-value" id="clickRate">--%</div>
+            <div class="card-subtitle">Based on unique clicks (last 24h)</div>
+          </div>
+        </div>
+
+        <!-- DNS Authentication -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <div class="card-header">
+            <span class="card-title">DNS Authentication</span>
+          </div>
+          <div class="dns-grid">
+            <div class="dns-item">
+              <div class="icon" id="spfIcon"></div>
+              <div class="label">SPF</div>
+              <div class="value" id="spfStatus">--</div>
+            </div>
+            <div class="dns-item">
+              <div class="icon" id="dkimIcon"></div>
+              <div class="label">DKIM</div>
+              <div class="value" id="dkimStatus">--</div>
+            </div>
+            <div class="dns-item">
+              <div class="icon" id="dmarcIcon"></div>
+              <div class="label">DMARC</div>
+              <div class="value" id="dmarcStatus">--</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email Activity -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <div class="card-header">
+            <span class="card-title">Email Activity (Last 24 Hours)</span>
+          </div>
+          <div class="metrics-row">
+            <div class="metric-item">
+              <div class="value" id="sentCount">0</div>
+              <div class="label">Sent</div>
+            </div>
+            <div class="metric-item">
+              <div class="value" id="deliveredCount">0</div>
+              <div class="label">Delivered</div>
+            </div>
+            <div class="metric-item">
+              <div class="value" id="opensCount">0</div>
+              <div class="label">Opens</div>
+            </div>
+            <div class="metric-item">
+              <div class="value" id="clicksCount">0</div>
+              <div class="label">Clicks</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Issues -->
+        <div class="card" id="issuesCard" style="display: none;">
+          <div class="card-header">
+            <span class="card-title">Issues & Recommendations</span>
+          </div>
+          <ul class="issues-list" id="issuesList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const API_URL = 'https://vtdpsiekdsabjkphwlef.supabase.co/functions/v1/health-dashboard';
+    let password = '';
+
+    // Check if password is stored
+    const storedPassword = localStorage.getItem('dashboardPassword');
+    if (storedPassword) {
+      password = storedPassword;
+      showDashboard();
+    }
+
+    // Enter key to login
+    document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') login();
+    });
+
+    function login() {
+      password = document.getElementById('passwordInput').value;
+      if (!password) {
+        document.getElementById('errorMessage').textContent = 'Please enter a password';
+        return;
+      }
+      localStorage.setItem('dashboardPassword', password);
+      showDashboard();
+    }
+
+    function showDashboard() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').classList.add('visible');
+      fetchData();
+    }
+
+    async function fetchData() {
+      document.getElementById('loading').style.display = 'flex';
+      document.getElementById('content').style.display = 'none';
+      document.getElementById('errorMessage').textContent = '';
+
+      try {
+        const response = await fetch(`${API_URL}?password=${encodeURIComponent(password)}`);
+
+        if (response.status === 401) {
+          localStorage.removeItem('dashboardPassword');
+          document.getElementById('loginScreen').style.display = 'flex';
+          document.getElementById('dashboard').classList.remove('visible');
+          document.getElementById('errorMessage').textContent = 'Invalid password';
+          return;
+        }
+
+        const data = await response.json();
+
+        if (data.error) {
+          throw new Error(data.message);
+        }
+
+        updateDashboard(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        document.getElementById('errorMessage').textContent = 'Failed to load data: ' + error.message;
+      }
+
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+    }
+
+    function updateDashboard(data) {
+      // Update timestamp
+      const timestamp = new Date(data.timestamp);
+      document.getElementById('lastUpdated').textContent = `Last updated: ${timestamp.toLocaleString()}`;
+
+      // Update verdict banner
+      const verdictBanner = document.getElementById('verdictBanner');
+      verdictBanner.className = `verdict-banner ${data.verdict}`;
+
+      const verdictConfig = {
+        safe: { icon: '🟢', title: 'SAFE TO SEND', subtitle: 'All metrics within healthy thresholds' },
+        warning: { icon: '🟡', title: 'PROCEED WITH CAUTION', subtitle: 'Some metrics need attention' },
+        critical: { icon: '🔴', title: 'DO NOT SEND', subtitle: 'Critical issues detected - stop sending!' },
+      };
+
+      const verdict = verdictConfig[data.verdict] || verdictConfig.warning;
+      document.getElementById('verdictIcon').textContent = verdict.icon;
+      document.getElementById('verdictTitle').textContent = verdict.title;
+      document.getElementById('verdictSubtitle').textContent = verdict.subtitle;
+
+      // Update rates
+      updateRate('bounce', data.events.bounceRate, data.thresholds.bounceRate);
+      updateRate('complaint', data.events.complaintRate, data.thresholds.complaintRate);
+
+      document.getElementById('openRate').textContent = `${data.events.openRate.toFixed(1)}%`;
+      document.getElementById('openStatus').textContent = data.events.openRate > 20 ? 'Good' : data.events.openRate > 10 ? 'Average' : 'Low';
+      document.getElementById('openStatus').className = `status-badge ${data.events.openRate > 20 ? 'healthy' : data.events.openRate > 10 ? 'warning' : 'fail'}`;
+
+      document.getElementById('clickRate').textContent = `${data.events.clickRate.toFixed(1)}%`;
+      document.getElementById('clickStatus').textContent = data.events.clickRate > 2 ? 'Good' : data.events.clickRate > 1 ? 'Average' : 'Low';
+      document.getElementById('clickStatus').className = `status-badge ${data.events.clickRate > 2 ? 'healthy' : data.events.clickRate > 1 ? 'warning' : 'fail'}`;
+
+      // Update DNS
+      updateDNS('spf', data.dns.spf);
+      updateDNS('dkim', data.dns.dkim);
+      updateDNS('dmarc', data.dns.dmarc);
+
+      // Update activity counts
+      document.getElementById('sentCount').textContent = data.events.sent.toLocaleString();
+      document.getElementById('deliveredCount').textContent = data.events.delivered.toLocaleString();
+      document.getElementById('opensCount').textContent = data.events.uniqueOpens.toLocaleString();
+      document.getElementById('clicksCount').textContent = data.events.uniqueClicks.toLocaleString();
+
+      // Update issues
+      const issuesCard = document.getElementById('issuesCard');
+      const issuesList = document.getElementById('issuesList');
+
+      if (data.issues.length > 0 || data.recommendations.length > 0) {
+        issuesCard.style.display = 'block';
+        issuesList.innerHTML = '';
+
+        data.issues.forEach(issue => {
+          const li = document.createElement('li');
+          li.innerHTML = `<span class="icon">❌</span> ${issue}`;
+          issuesList.appendChild(li);
+        });
+
+        data.recommendations.forEach(rec => {
+          const li = document.createElement('li');
+          li.innerHTML = `<span class="icon">💡</span> ${rec}`;
+          issuesList.appendChild(li);
+        });
+      } else {
+        issuesCard.style.display = 'none';
+      }
+    }
+
+    function updateRate(type, rate, thresholds) {
+      const rateEl = document.getElementById(`${type}Rate`);
+      const statusEl = document.getElementById(`${type}Status`);
+
+      rateEl.textContent = type === 'complaint' ? `${rate.toFixed(3)}%` : `${rate.toFixed(2)}%`;
+
+      if (rate >= thresholds.critical) {
+        statusEl.textContent = 'Critical';
+        statusEl.className = 'status-badge critical';
+      } else if (rate >= thresholds.warning) {
+        statusEl.textContent = 'Warning';
+        statusEl.className = 'status-badge warning';
+      } else {
+        statusEl.textContent = 'Healthy';
+        statusEl.className = 'status-badge healthy';
+      }
+    }
+
+    function updateDNS(type, data) {
+      const iconEl = document.getElementById(`${type}Icon`);
+      const statusEl = document.getElementById(`${type}Status`);
+
+      if (data.status === 'pass') {
+        iconEl.textContent = '✅';
+        statusEl.textContent = 'Pass';
+      } else if (data.status === 'missing') {
+        iconEl.textContent = '⚠️';
+        statusEl.textContent = 'Missing';
+      } else {
+        iconEl.textContent = '❌';
+        statusEl.textContent = 'Fail';
+      }
+    }
+
+    // Auto-refresh every 60 seconds
+    setInterval(() => {
+      if (document.getElementById('dashboard').classList.contains('visible')) {
+        fetchData();
+      }
+    }, 60000);
+  </script>
+</body>
+</html>
