@@ -594,6 +594,7 @@
   <script>
     // Configuration
     const API_URL = 'https://vtdpsiekdsabjkphwlef.supabase.co/functions/v1/health-dashboard';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0ZHBzaWVrZHNhYmprcGh3bGVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI4OTY1NTMsImV4cCI6MjA0ODQ3MjU1M30.lYVe7DhWek_-c6Prb46sPDnfnOCBYhEn5s7bnRrXm8c';
     let password = '';
 
     // Check if password is stored
@@ -630,7 +631,12 @@
       document.getElementById('errorMessage').textContent = '';
 
       try {
-        const response = await fetch(`${API_URL}?password=${encodeURIComponent(password)}`);
+        const response = await fetch(`${API_URL}?password=${encodeURIComponent(password)}`, {
+          headers: {
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+            'apikey': SUPABASE_ANON_KEY
+          }
+        });
 
         if (response.status === 401) {
           localStorage.removeItem('dashboardPassword');
