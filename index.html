@@ -25,11 +25,7 @@
       --border: #334155;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -39,12 +35,8 @@
       padding: 2rem;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .container { max-width: 1200px; margin: 0 auto; }
 
-    /* Login Screen */
     .login-screen {
       display: flex;
       flex-direction: column;
@@ -54,15 +46,9 @@
       gap: 1.5rem;
     }
 
-    .login-screen h1 {
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
+    .login-screen h1 { font-size: 1.5rem; font-weight: 600; }
 
-    .login-form {
-      display: flex;
-      gap: 0.75rem;
-    }
+    .login-form { display: flex; gap: 0.75rem; }
 
     .login-form input {
       padding: 0.75rem 1rem;
@@ -86,25 +72,12 @@
       transition: opacity 0.2s;
     }
 
-    .login-form button:hover {
-      opacity: 0.9;
-    }
+    .login-form button:hover { opacity: 0.9; }
+    .error-message { color: var(--red); font-size: 0.875rem; }
 
-    .error-message {
-      color: var(--red);
-      font-size: 0.875rem;
-    }
+    .dashboard { display: none; }
+    .dashboard.visible { display: block; }
 
-    /* Dashboard */
-    .dashboard {
-      display: none;
-    }
-
-    .dashboard.visible {
-      display: block;
-    }
-
-    /* Header */
     .header {
       display: flex;
       justify-content: space-between;
@@ -120,10 +93,7 @@
       gap: 0.5rem;
     }
 
-    .last-updated {
-      color: var(--text-secondary);
-      font-size: 0.875rem;
-    }
+    .last-updated { color: var(--text-secondary); font-size: 0.875rem; }
 
     .refresh-btn {
       padding: 0.5rem 1rem;
@@ -136,11 +106,8 @@
       transition: background 0.2s;
     }
 
-    .refresh-btn:hover {
-      background: var(--bg-card);
-    }
+    .refresh-btn:hover { background: var(--bg-card); }
 
-    /* Verdict Banner */
     .verdict-banner {
       padding: 1.5rem;
       border-radius: 1rem;
@@ -150,55 +117,19 @@
       gap: 1rem;
     }
 
-    .verdict-banner.safe {
-      background: var(--green-bg);
-      border: 1px solid var(--green);
-    }
+    .verdict-banner.safe { background: var(--green-bg); border: 1px solid var(--green); }
+    .verdict-banner.warning { background: var(--yellow-bg); border: 1px solid var(--yellow); }
+    .verdict-banner.critical { background: var(--red-bg); border: 1px solid var(--red); }
 
-    .verdict-banner.warning {
-      background: var(--yellow-bg);
-      border: 1px solid var(--yellow);
-    }
+    .verdict-icon { font-size: 2rem; }
+    .verdict-text h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .verdict-text p { color: var(--text-secondary); font-size: 0.875rem; }
 
-    .verdict-banner.critical {
-      background: var(--red-bg);
-      border: 1px solid var(--red);
-    }
+    .section-header { margin-bottom: 1rem; }
+    .section-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
+    .section-description { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+    .data-source { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic; }
 
-    .verdict-icon {
-      font-size: 2rem;
-    }
-
-    .verdict-text h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-
-    .verdict-text p {
-      color: var(--text-secondary);
-      font-size: 0.875rem;
-    }
-
-    /* Section Header */
-    .section-header {
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.25rem;
-    }
-
-    .section-description {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    /* Grid Layout */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -206,7 +137,6 @@
       margin-bottom: 2rem;
     }
 
-    /* Cards */
     .card {
       background: var(--bg-card);
       border-radius: 1rem;
@@ -229,18 +159,8 @@
       letter-spacing: 0.05em;
     }
 
-    .card-value {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
-
-    .card-description {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-      line-height: 1.4;
-    }
+    .card-value { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .card-description { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; line-height: 1.4; }
 
     .card-subtitle {
       font-size: 0.75rem;
@@ -250,7 +170,9 @@
       margin-top: 0.5rem;
     }
 
-    /* Status Badge */
+    .card-subtitle a { color: var(--blue); text-decoration: none; }
+    .card-subtitle a:hover { text-decoration: underline; }
+
     .status-badge {
       padding: 0.25rem 0.75rem;
       border-radius: 9999px;
@@ -258,32 +180,12 @@
       font-weight: 500;
     }
 
-    .status-badge.pass, .status-badge.healthy {
-      background: var(--green-bg);
-      color: var(--green);
-    }
+    .status-badge.pass, .status-badge.healthy { background: var(--green-bg); color: var(--green); }
+    .status-badge.warning { background: var(--yellow-bg); color: var(--yellow); }
+    .status-badge.fail, .status-badge.critical { background: var(--red-bg); color: var(--red); }
+    .status-badge.missing { background: var(--yellow-bg); color: var(--yellow); }
 
-    .status-badge.warning {
-      background: var(--yellow-bg);
-      color: var(--yellow);
-    }
-
-    .status-badge.fail, .status-badge.critical {
-      background: var(--red-bg);
-      color: var(--red);
-    }
-
-    .status-badge.missing {
-      background: var(--yellow-bg);
-      color: var(--yellow);
-    }
-
-    /* DNS Section */
-    .dns-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-    }
+    .dns-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 
     .dns-item {
       text-align: center;
@@ -292,37 +194,13 @@
       border-radius: 0.75rem;
     }
 
-    .dns-item .icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
+    .dns-item .icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .dns-item .label { font-size: 0.75rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
+    .dns-item .value { font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.25rem; }
+    .dns-item .description { font-size: 0.65rem; color: var(--text-muted); line-height: 1.3; }
+    .dns-item .impact { font-size: 0.6rem; color: var(--yellow); margin-top: 0.25rem; font-style: italic; }
 
-    .dns-item .label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.25rem;
-    }
-
-    .dns-item .value {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 0.25rem;
-    }
-
-    .dns-item .description {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      line-height: 1.3;
-    }
-
-    /* Metrics Row */
-    .metrics-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
 
     .metric-item {
       text-align: center;
@@ -331,28 +209,11 @@
       border-radius: 0.75rem;
     }
 
-    .metric-item .value {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
+    .metric-item .value { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .metric-item .label { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+    .metric-item .description { font-size: 0.65rem; color: var(--text-muted); }
 
-    .metric-item .label {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      margin-bottom: 0.25rem;
-    }
-
-    .metric-item .description {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-    }
-
-    /* Issues List */
-    .issues-list {
-      list-style: none;
-    }
-
+    .issues-list { list-style: none; }
     .issues-list li {
       padding: 0.75rem 0;
       border-bottom: 1px solid var(--border);
@@ -360,22 +221,10 @@
       align-items: center;
       gap: 0.75rem;
     }
+    .issues-list li:last-child { border-bottom: none; }
+    .issues-list .icon { font-size: 1rem; }
 
-    .issues-list li:last-child {
-      border-bottom: none;
-    }
-
-    .issues-list .icon {
-      font-size: 1rem;
-    }
-
-    /* Loading */
-    .loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem;
-    }
+    .loading { display: flex; align-items: center; justify-content: center; padding: 4rem; }
 
     .spinner {
       width: 40px;
@@ -386,50 +235,18 @@
       animation: spin 1s linear infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Info tooltip */
-    .info-icon {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      background: var(--text-muted);
-      color: var(--bg-dark);
-      border-radius: 50%;
-      font-size: 10px;
-      text-align: center;
-      line-height: 14px;
-      cursor: help;
-      margin-left: 4px;
-    }
-
-    /* Responsive */
     @media (max-width: 768px) {
-      body {
-        padding: 1rem;
-      }
-
-      .header {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-      }
-
-      .dns-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .metrics-row {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      body { padding: 1rem; }
+      .header { flex-direction: column; gap: 1rem; text-align: center; }
+      .dns-grid { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
       <h1>Niyyah Email Health Dashboard</h1>
       <div class="login-form">
@@ -439,9 +256,7 @@
       <p class="error-message" id="errorMessage"></p>
     </div>
 
-    <!-- Dashboard -->
     <div class="dashboard" id="dashboard">
-      <!-- Header -->
       <div class="header">
         <div>
           <h1>Niyyah Email Health Dashboard</h1>
@@ -450,14 +265,11 @@
         <button class="refresh-btn" onclick="fetchData()">Refresh</button>
       </div>
 
-      <!-- Loading -->
       <div class="loading" id="loading">
         <div class="spinner"></div>
       </div>
 
-      <!-- Content -->
       <div id="content" style="display: none;">
-        <!-- Verdict Banner -->
         <div class="verdict-banner" id="verdictBanner">
           <span class="verdict-icon" id="verdictIcon"></span>
           <div class="verdict-text">
@@ -466,63 +278,58 @@
           </div>
         </div>
 
-        <!-- Deliverability Metrics Section -->
         <div class="section-header">
           <div class="section-title">Deliverability Metrics</div>
           <div class="section-description">These metrics determine if AWS will suspend your sending. Keep bounce and complaint rates low to maintain good sender reputation.</div>
+          <div class="data-source">Source: AWS SES via SNS webhooks → Supabase email_events table</div>
         </div>
 
-        <!-- Main Grid -->
         <div class="grid">
-          <!-- Bounce Rate -->
           <div class="card">
             <div class="card-header">
               <span class="card-title">Bounce Rate</span>
               <span class="status-badge" id="bounceStatus">--</span>
             </div>
             <div class="card-value" id="bounceRate">--%</div>
-            <div class="card-description">% of emails that couldn't be delivered (invalid addresses, full inboxes). High bounce = sending to bad addresses.</div>
-            <div class="card-subtitle">Target: &lt;2% | Warning: 5% | AWS Suspends: 10%</div>
+            <div class="card-description">Emails that failed to deliver - usually because the email address doesn't exist or the inbox is full. High bounce rate means you're sending to bad addresses.</div>
+            <div class="card-subtitle"><a href="https://docs.aws.amazon.com/ses/latest/dg/monitor-sender-reputation.html" target="_blank">AWS Thresholds</a>: Safe &lt;2% | Warning 5% | Suspension 10%</div>
           </div>
 
-          <!-- Complaint Rate -->
           <div class="card">
             <div class="card-header">
               <span class="card-title">Complaint Rate</span>
               <span class="status-badge" id="complaintStatus">--</span>
             </div>
             <div class="card-value" id="complaintRate">--%</div>
-            <div class="card-description">% of recipients who clicked "Report as Spam". This is the worst signal - means people don't want your emails.</div>
-            <div class="card-subtitle">Target: &lt;0.05% | Warning: 0.08% | AWS Suspends: 0.1%</div>
+            <div class="card-description">People who clicked "Mark as Spam" on your email. This is the most damaging metric - it tells email providers your emails are unwanted.</div>
+            <div class="card-subtitle"><a href="https://docs.aws.amazon.com/ses/latest/dg/monitor-sender-reputation.html" target="_blank">AWS Thresholds</a>: Safe &lt;0.05% | Warning 0.08% | Suspension 0.1%</div>
           </div>
 
-          <!-- Open Rate -->
           <div class="card">
             <div class="card-header">
               <span class="card-title">Open Rate</span>
               <span class="status-badge" id="openStatus">--</span>
             </div>
             <div class="card-value" id="openRate">--%</div>
-            <div class="card-description">% of recipients who opened your email. Measures engagement and subject line effectiveness.</div>
-            <div class="card-subtitle">Good: &gt;25% | Average: 15-25% | Low: &lt;15%</div>
+            <div class="card-description">People who opened your email. Tracked via a tiny invisible image. Shows if your subject lines are working and if people care about your emails.</div>
+            <div class="card-subtitle"><a href="https://www.campaignmonitor.com/resources/guides/email-marketing-benchmarks/" target="_blank">Industry benchmarks</a>: Good &gt;25% | Average 15-25% | Low &lt;15%</div>
           </div>
 
-          <!-- Click Rate -->
           <div class="card">
             <div class="card-header">
               <span class="card-title">Click Rate</span>
               <span class="status-badge" id="clickStatus">--</span>
             </div>
             <div class="card-value" id="clickRate">--%</div>
-            <div class="card-description">% of recipients who clicked a link in your email. Shows how compelling your content is.</div>
-            <div class="card-subtitle">Good: &gt;3% | Average: 1-3% | Low: &lt;1%</div>
+            <div class="card-description">People who clicked a link in your email. Shows if your content is compelling enough to drive action.</div>
+            <div class="card-subtitle"><a href="https://www.campaignmonitor.com/resources/guides/email-marketing-benchmarks/" target="_blank">Industry benchmarks</a>: Good &gt;3% | Average 1-3% | Low &lt;1%</div>
           </div>
         </div>
 
-        <!-- DNS Authentication Section -->
         <div class="section-header">
           <div class="section-title">DNS Authentication</div>
-          <div class="section-description">These DNS records prove your emails are legitimate and not forged. If any fail, your emails may go to spam or be rejected.</div>
+          <div class="section-description">These are security records in your domain's DNS that prove your emails are really from you (not a scammer pretending to be you). Without them, your emails will go to spam.</div>
+          <div class="data-source">Source: Live DNS lookups via Google Public DNS</div>
         </div>
 
         <div class="card" style="margin-bottom: 2rem;">
@@ -531,27 +338,30 @@
               <div class="icon" id="spfIcon"></div>
               <div class="label">SPF</div>
               <div class="value" id="spfStatus">--</div>
-              <div class="description">Tells email providers which servers can send from niyyah.app (like a guest list)</div>
+              <div class="description"><strong>Sender Policy Framework</strong> - A list of servers allowed to send emails from your domain. Like a "guest list" at the door.</div>
+              <div class="impact">If missing: Emails may be rejected or marked as spam</div>
             </div>
             <div class="dns-item">
               <div class="icon" id="dkimIcon"></div>
               <div class="label">DKIM</div>
               <div class="value" id="dkimStatus">--</div>
-              <div class="description">Digital signature proving the email wasn't tampered with (like a wax seal)</div>
+              <div class="description"><strong>DomainKeys Identified Mail</strong> - A digital signature attached to every email proving it wasn't changed in transit. Like a tamper-proof seal.</div>
+              <div class="impact">If missing: Emails look suspicious and may be flagged</div>
             </div>
             <div class="dns-item">
               <div class="icon" id="dmarcIcon"></div>
               <div class="label">DMARC</div>
               <div class="value" id="dmarcStatus">--</div>
-              <div class="description">Policy for what to do if SPF/DKIM fail (reject, quarantine, or allow)</div>
+              <div class="description"><strong>Domain-based Message Authentication</strong> - Tells email providers what to do with emails that fail SPF/DKIM checks (reject, quarantine, or allow).</div>
+              <div class="impact">If missing: You lose control over fake emails using your domain</div>
             </div>
           </div>
         </div>
 
-        <!-- Email Activity Section -->
         <div class="section-header">
           <div class="section-title">Email Activity (Last 24 Hours)</div>
-          <div class="section-description">Raw counts of email events tracked in the last 24 hours. Use this to monitor your sending volume.</div>
+          <div class="section-description">Raw counts of email events. Use this to track your sending volume and engagement.</div>
+          <div class="data-source">Source: Supabase email_events table (populated by send script + AWS SNS webhooks)</div>
         </div>
 
         <div class="card" style="margin-bottom: 2rem;">
@@ -559,12 +369,12 @@
             <div class="metric-item">
               <div class="value" id="sentCount">0</div>
               <div class="label">Sent</div>
-              <div class="description">Total emails sent</div>
+              <div class="description">Emails we attempted to send</div>
             </div>
             <div class="metric-item">
               <div class="value" id="deliveredCount">0</div>
               <div class="label">Delivered</div>
-              <div class="description">Successfully reached inbox</div>
+              <div class="description">Emails that reached the inbox</div>
             </div>
             <div class="metric-item">
               <div class="value" id="opensCount">0</div>
@@ -579,7 +389,6 @@
           </div>
         </div>
 
-        <!-- Issues Section -->
         <div class="card" id="issuesCard" style="display: none;">
           <div class="section-header" style="margin-bottom: 0.5rem;">
             <div class="section-title">Issues & Recommendations</div>
@@ -592,19 +401,16 @@
   </div>
 
   <script>
-    // Configuration
     const API_URL = 'https://vtdpsiekdsabjkphwlef.supabase.co/functions/v1/health-dashboard';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0ZHBzaWVrZHNhYmprcGh3bGVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxNzA3NjYsImV4cCI6MjA3OTc0Njc2Nn0.0_-ZKAqDosUWXhbVUb_9BInFD2koMF-DDqMYTgb-2MA';
     let password = '';
 
-    // Check if password is stored
     const storedPassword = localStorage.getItem('dashboardPassword');
     if (storedPassword) {
       password = storedPassword;
       showDashboard();
     }
 
-    // Enter key to login
     document.getElementById('passwordInput').addEventListener('keypress', (e) => {
       if (e.key === 'Enter') login();
     });
@@ -647,11 +453,7 @@
         }
 
         const data = await response.json();
-
-        if (data.error) {
-          throw new Error(data.message);
-        }
-
+        if (data.error) throw new Error(data.message);
         updateDashboard(data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -663,11 +465,9 @@
     }
 
     function updateDashboard(data) {
-      // Update timestamp
       const timestamp = new Date(data.timestamp);
       document.getElementById('lastUpdated').textContent = `Last updated: ${timestamp.toLocaleString()}`;
 
-      // Update verdict banner
       const verdictBanner = document.getElementById('verdictBanner');
       verdictBanner.className = `verdict-banner ${data.verdict}`;
 
@@ -682,7 +482,6 @@
       document.getElementById('verdictTitle').textContent = verdict.title;
       document.getElementById('verdictSubtitle').textContent = verdict.subtitle;
 
-      // Update rates
       updateRate('bounce', data.events.bounceRate, data.thresholds.bounceRate);
       updateRate('complaint', data.events.complaintRate, data.thresholds.complaintRate);
 
@@ -694,31 +493,26 @@
       document.getElementById('clickStatus').textContent = data.events.clickRate > 3 ? 'Good' : data.events.clickRate > 1 ? 'Average' : 'Low';
       document.getElementById('clickStatus').className = `status-badge ${data.events.clickRate > 3 ? 'healthy' : data.events.clickRate > 1 ? 'warning' : 'fail'}`;
 
-      // Update DNS
       updateDNS('spf', data.dns.spf);
       updateDNS('dkim', data.dns.dkim);
       updateDNS('dmarc', data.dns.dmarc);
 
-      // Update activity counts
       document.getElementById('sentCount').textContent = data.events.sent.toLocaleString();
       document.getElementById('deliveredCount').textContent = data.events.delivered.toLocaleString();
       document.getElementById('opensCount').textContent = data.events.uniqueOpens.toLocaleString();
       document.getElementById('clicksCount').textContent = data.events.uniqueClicks.toLocaleString();
 
-      // Update issues
       const issuesCard = document.getElementById('issuesCard');
       const issuesList = document.getElementById('issuesList');
 
       if (data.issues.length > 0 || data.recommendations.length > 0) {
         issuesCard.style.display = 'block';
         issuesList.innerHTML = '';
-
         data.issues.forEach(issue => {
           const li = document.createElement('li');
           li.innerHTML = `<span class="icon">❌</span> ${issue}`;
           issuesList.appendChild(li);
         });
-
         data.recommendations.forEach(rec => {
           const li = document.createElement('li');
           li.innerHTML = `<span class="icon">💡</span> ${rec}`;
@@ -763,12 +557,12 @@
       }
     }
 
-    // Auto-refresh every 60 seconds
+    // Auto-refresh every 5 minutes (300000ms)
     setInterval(() => {
       if (document.getElementById('dashboard').classList.contains('visible')) {
         fetchData();
       }
-    }, 60000);
+    }, 300000);
   </script>
 </body>
 </html>
