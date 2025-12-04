@@ -123,6 +123,49 @@
 
     .header-buttons { display: flex; gap: 0.5rem; }
 
+    .campaign-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .campaign-table th {
+      text-align: left;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .campaign-table td {
+      padding: 0.75rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .campaign-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .campaign-table tr:hover {
+      background: var(--bg-dark);
+    }
+
+    .campaign-table .campaign-name {
+      font-weight: 500;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .campaign-table .rate-good { color: var(--green); }
+    .campaign-table .rate-warning { color: var(--yellow); }
+    .campaign-table .rate-bad { color: var(--red); }
+
     .verdict-banner {
       padding: 1.5rem;
       border-radius: 1rem;
@@ -414,6 +457,34 @@
           </div>
           <ul class="issues-list" id="issuesList"></ul>
         </div>
+
+        <div class="section-header" style="margin-top: 2rem;">
+          <div class="section-title">Campaign History</div>
+          <div class="section-description">Historical metrics per email campaign/batch. Stats update as events are tracked.</div>
+          <div class="data-source">Source: Supabase campaign_stats table (auto-saved after each send)</div>
+        </div>
+
+        <div class="card" id="campaignHistoryCard">
+          <div id="campaignHistoryEmpty" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+            No campaigns recorded yet. Send an email to see history here.
+          </div>
+          <table class="campaign-table" id="campaignTable" style="display: none;">
+            <thead>
+              <tr>
+                <th>Campaign</th>
+                <th>Date</th>
+                <th>Sent</th>
+                <th>Delivered</th>
+                <th>Opens</th>
+                <th>Clicks</th>
+                <th>Bounce %</th>
+                <th>Open %</th>
+                <th>Click %</th>
+              </tr>
+            </thead>
+            <tbody id="campaignTableBody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -539,6 +610,47 @@
       } else {
         issuesCard.style.display = 'none';
       }
+
+      // Update campaign history
+      updateCampaignHistory(data.campaigns || []);
+    }
+
+    function updateCampaignHistory(campaigns) {
+      const emptyEl = document.getElementById('campaignHistoryEmpty');
+      const tableEl = document.getElementById('campaignTable');
+      const tbody = document.getElementById('campaignTableBody');
+
+      if (!campaigns || campaigns.length === 0) {
+        emptyEl.style.display = 'block';
+        tableEl.style.display = 'none';
+        return;
+      }
+
+      emptyEl.style.display = 'none';
+      tableEl.style.display = 'table';
+      tbody.innerHTML = '';
+
+      campaigns.forEach(c => {
+        const tr = document.createElement('tr');
+        const date = new Date(c.sent_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+        const bounceClass = c.bounce_rate >= 5 ? 'rate-bad' : c.bounce_rate >= 2 ? 'rate-warning' : 'rate-good';
+        const openClass = c.open_rate >= 25 ? 'rate-good' : c.open_rate >= 15 ? 'rate-warning' : 'rate-bad';
+        const clickClass = c.click_rate >= 3 ? 'rate-good' : c.click_rate >= 1 ? 'rate-warning' : 'rate-bad';
+
+        tr.innerHTML = `
+          <td class="campaign-name" title="${c.subject_line || c.campaign_name}">${c.campaign_name || c.campaign_id}</td>
+          <td>${date}</td>
+          <td>${(c.total_sent || 0).toLocaleString()}</td>
+          <td>${(c.total_delivered || 0).toLocaleString()}</td>
+          <td>${(c.unique_opens || 0).toLocaleString()}</td>
+          <td>${(c.unique_clicks || 0).toLocaleString()}</td>
+          <td class="${bounceClass}">${(c.bounce_rate || 0).toFixed(2)}%</td>
+          <td class="${openClass}">${(c.open_rate || 0).toFixed(1)}%</td>
+          <td class="${clickClass}">${(c.click_rate || 0).toFixed(1)}%</td>
+        `;
+        tbody.appendChild(tr);
+      });
     }
 
     function updateRate(type, rate, thresholds) {
